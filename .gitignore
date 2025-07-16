@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Виртуальные окружения
+.venv/
+venv/
+env/
+ENV/
+
+# IDE (PyCharm)
+.idea/
+*.iml
+
+# Логи
+*.log
+
+# Настройки OS
+.DS_Store
+Thumbs.db
+
+# Тестовые отчёты
+allure-report/
+allure-results/
+
+# Настройки pytest
+.cache/
+.pytest_cache/
+
+# Файлы окружения
+*.env
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Компиляция Cython
+*.pyd
+*.so
+
+git add .gitignore
+git commit -m "Добавлен .gitignore"
