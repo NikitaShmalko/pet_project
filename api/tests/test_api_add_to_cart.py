@@ -2,6 +2,8 @@ import requests
 import pytest
 import allure
 
+from api.models.add_to_cart_model import AddToCartResponse
+
 cart_url = 'https://m-g-p.ru/cart/add/'
 
 @allure.title('Тест Api добавления товара в корзину')
@@ -18,17 +20,20 @@ def test_add_to_cart_api(quantity, product_id, api_session):
         'html':'true'
     }
 
-    with allure.step('Отправляем запрос на сервер'):
+    with allure.step('Отправляем POST-запрос на сервер'):
+
         response = session.post(cart_url, data=payload, headers=headers)
 
 
-    with allure.step('Проверяем, что статус = ОК, кол-во в payload = кол-во в api_data'):
-        try:
-            api_data = response.json()
-        except ValueError:
-            pytest.fail('Ответ не JSON')
+    with allure.step('Валидация ответа через Pydantic'):
 
+        try:
+            api_obj = AddToCartResponse.model_validate(response.json())
+        except Exception as e:
+            pytest.fail(f'Ошибка валидации ответа API: {e}')
+
+    with allure.step('Данные'):
         assert response.status_code == 200
-        assert api_data.get('status') == 'ok'
-        assert api_data.get('data', {}).get('count') == payload['quantity']
-        assert 'total' in api_data.get('data')
+        assert api_obj.status == 'ok'
+        assert api_obj.data.count == payload['quantity']
+        assert api_obj.data.total is not None
