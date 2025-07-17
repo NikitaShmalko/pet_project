@@ -18,5 +18,3 @@ class Data(BaseModel):
 class SuccessResponse(BaseModel):
     status: str
     data: Data
-
-    test test
