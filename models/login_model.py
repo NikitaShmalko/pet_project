@@ -19,4 +19,3 @@ class SuccessResponse(BaseModel):
     status: str
     data: Data
 
-test te stsdsfs
