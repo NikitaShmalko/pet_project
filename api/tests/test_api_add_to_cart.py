@@ -24,7 +24,6 @@ def test_add_to_cart_api(quantity, product_id, api_session):
 
         response = session.post(cart_url, data=payload, headers=headers)
 
-
     with allure.step('Валидация ответа через Pydantic'):
 
         try:
@@ -32,7 +31,8 @@ def test_add_to_cart_api(quantity, product_id, api_session):
         except Exception as e:
             pytest.fail(f'Ошибка валидации ответа API: {e}')
 
-    with allure.step('Данные'):
+    with allure.step('Проверяем содержимое ответа'):
+
         assert response.status_code == 200
         assert api_obj.status == 'ok'
         assert api_obj.data.count == payload['quantity']
