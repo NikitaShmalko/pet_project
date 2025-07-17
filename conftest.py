@@ -5,7 +5,6 @@ from pages.login_page import LoginPage
 from pages.categories_page import CategoriesPage
 from pages.search_cart_page import SearchCart
 from pages.main_page import MainPage
-import time
 import allure
 
 @pytest.fixture
@@ -48,5 +47,20 @@ def api_session(base_url):
     return {
         'session': session,
         'headers': headers
+    }
+
+@pytest.fixture
+def api_login_session(login, password):
+    login_url = 'https://m-g-p.ru/login/'
+    payload = {
+        'login': login,
+        'password': password,
+        'wa_auth_login':1,
+        'wa_json_mode':1,
+        'need_redirects':1
+    }
+    return {
+        'login_url': login_url,
+        'payload': payload
     }
 
